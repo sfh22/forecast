@@ -17,7 +17,7 @@ def main():
         csv_string = df.to_csv(index=False, encoding="utf-8")
 
         # Offer a download link for the manipulated data as a CSV file
-        if st.download_button("Download Manipulated Data as CSV", csv_string, "text/csv"):
+        if st.download_button("Download Manipulated Data as CSV", csv_string, "text.csv"):
             st.write("Thanks for downloading!")
 
 if __name__ == "__main__":

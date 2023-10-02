@@ -3,7 +3,7 @@ import pandas as pd
 import io
 
 def main():
-    st.title("Manipulation")
+    st.title("Excel Manipulation")
     
     # File upload
     uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx"])

@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-import io
 
 def main():
-    st.title("Excel Manipulation")
+    st.title("Excel Manipulation App")
     
     # File upload
     uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx"])
@@ -16,7 +15,7 @@ def main():
 
         # Offer a download link for the manipulated data
         output = io.BytesIO()
-        with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
+        with pd.ExcelWriter(output, engine="openpyxl") as writer:
             df.to_excel(writer, sheet_name="Sheet1", index=False)
 
         output.seek(0)

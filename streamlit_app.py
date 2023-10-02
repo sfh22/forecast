@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+
 def main():
     st.title("Excel Manipulation App")
     
@@ -17,8 +18,10 @@ def main():
         # List of agency names to look for
         agency_names = ['Starcom', 'Zenith', 'Spark', 'Digitas', 'Publicis']
 
-        # Loop through all files in the directory
-        for sheet_name in df.sheet_names:
+        # Specify the sheet names
+        sheet_names = ['PM GCC', 'PM Egypt', 'PM Levant', 'PM Iraq']
+
+        for sheet_name in sheet_names:
             # Read the sheet with 'Client' as the header row
             df_sheet = df.parse(sheet_name=sheet_name, header=None)
 
@@ -85,23 +88,9 @@ def main():
         # Drop rows where 'Value' is zero
         grouped_result_df = grouped_result_df[grouped_result_df['Value'] != 0]
 
-        # Create a BytesIO buffer to store the Excel data
-        output = io.BytesIO()
-
-        # Use Pandas to write the DataFrame to the BytesIO buffer as an Excel file
-        with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
-            grouped_result_df.to_excel(writer, sheet_name="Consolidated_Data", index=False)
-
-        # Set the cursor to the beginning of the buffer
-        output.seek(0)
-
-        # Offer a download link for the manipulated data
-        st.download_button(
-            label="Download Manipulated Data",
-            data=output,
-            file_name="manipulated_data.xlsx",
-            key="download_button"
-        )
+        # Offer a download link for the manipulated data as CSV
+        if st.download_button("Download Manipulated Data as CSV", grouped_result_df.to_csv(index=False), "text/csv"):
+            st.write("Thanks for downloading!")
 
 if __name__ == "__main__":
     main()

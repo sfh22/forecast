@@ -18,7 +18,7 @@ def main():
         output = io.BytesIO()
 
         # Use Pandas to write the DataFrame to the BytesIO buffer as an Excel file
-        with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
+        with pd.ExcelWriter(output, engine="opynpyxl") as writer:
             df.to_excel(writer, sheet_name="Sheet1", index=False)
 
         # Set the cursor to the beginning of the buffer

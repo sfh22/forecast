@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import io
-import xlsxwriter
 
 def main():
     st.title("Excel Manipulation App")
@@ -15,23 +13,12 @@ def main():
 
         # Perform data manipulations here (e.g., df manipulation)
 
-        # Create a BytesIO buffer to store the Excel data
-        output = io.BytesIO()
+        # Use Pandas to convert the DataFrame to a CSV string
+        csv_string = df.to_csv(index=False, encoding="utf-8")
 
-        # Use Pandas to write the DataFrame to the BytesIO buffer as an Excel file
-        with pd.ExcelWriter(output, engine="opynpyxl") as writer:
-            df.to_excel(writer, sheet_name="Sheet1", index=False)
-
-        # Set the cursor to the beginning of the buffer
-        output.seek(0)
-
-        # Offer a download link for the manipulated data
-        st.download_button(
-            label="Download Manipulated Data",
-            data=output,
-            file_name="manipulated_data.xlsx",
-            key="download_button"
-        )
+        # Offer a download link for the manipulated data as a CSV file
+        if st.download_button("Download Manipulated Data as CSV", csv_string, "text/csv"):
+            st.write("Thanks for downloading!")
 
 if __name__ == "__main__":
     main()

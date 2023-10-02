@@ -13,16 +13,14 @@ def main():
 
         # Perform data manipulations here (e.g., df manipulation)
 
-        # Offer a download link for the manipulated data
-        output = io.BytesIO()
-        with pd.ExcelWriter(output, engine="openpyxl") as writer:
-            df.to_excel(writer, sheet_name="Sheet1", index=False)
+        # Save the manipulated data to a new Excel file
+        manipulated_filename = "manipulated_data.xlsx"
+        df.to_excel(manipulated_filename, index=False)
 
-        output.seek(0)
+        # Offer a download link for the manipulated data
         st.download_button(
             label="Download Manipulated Data",
-            data=output,
-            file_name="manipulated_data.xlsx",
+            data=manipulated_filename,
             key="download_button"
         )
 
